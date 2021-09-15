@@ -9,11 +9,11 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 
 console.log(import.meta.env.VITE_DOMAIN)
+console.log(import.meta.env)
+console.log(import.meta)
 
 ReactDOM.render(
   <Auth0Provider
-    // domain={process.env.domain}
-    // clientId={process.env.clientID}
     domain={import.meta.env.VITE_DOMAIN}
     clientId={import.meta.env.VITE_CLIENTID}
     redirectUri={window.location.origin}
