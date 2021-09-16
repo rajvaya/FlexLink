@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const LoginButton = () => {
     const { loginWithRedirect } = useAuth0();
 
-    return <button onClick={() => loginWithRedirect()} className="p-4 border-2 rounded-full text-blue-500">Log In</button>;
+    return <button onClick={() => loginWithRedirect({ redirectUri: window.location.origin+"/dashboard" })} className="py-4 px-20 border-2 rounded-md border-gray-500 text-blue-800 text-lg w-max">Log In</button>;
 };
 
 export default LoginButton;
