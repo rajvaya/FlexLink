@@ -1,80 +1,79 @@
-import React, { useEffect } from 'react'
-import LogoutButton from '../components/logoutButton'
+import React, { useEffect } from "react";
+import LogoutButton from "../components/logoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import Profile from '../components/profile';
-import firebase from '../firebase';
-
-import { collection, getDocs, setDoc, query, doc, getFirestore } from 'firebase/firestore/lite';
-
-
+import Profile from "../components/profile";
+import firebase from "../firebase";
+import {
+    collection,
+    getDocs,
+    getDoc,
+    setDoc,
+    query,
+    doc,
+    getFirestore,
+} from "firebase/firestore/lite";
+import Header from "../components/header";
+import ProfileImage from "../components/ProfileImage";
+import LinkInput from "../components/LinkInput";
 
 const DashBoard = () => {
-
-
-    const { user, isAuthenticated, isLoading, } = useAuth0();
-
+    const { user, isAuthenticated, isLoading } = useAuth0();
 
     console.log(firebase);
     console.log();
 
-
-
-
-    async function getAll() {
+    async function createUser(username) {
         try {
-
-            const querySnapshot = await getDocs(collection(getFirestore(), "users"));
-            querySnapshot.forEach((doc) => {
-
-                console.log(doc.id, " => ", doc.data());
+            await setDoc(doc(getFirestore(), "users", username), {
+                name: username,
+                links: [],
+                theme: "default",
+            }).then((e) => {
+                console.log("new user Created");
             });
-        } catch (e) {
-            console.error("Error in Fetching: ", e.code, e.message);
+        } catch (error) {
+            console.log("error in user Creation : ", error);
         }
     }
 
+    async function getUser(user) {
+        try {
+            console.log("searching in db for ", user);
+            const docRef = doc(getFirestore(), "users", user);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data());
+            } else {
+                createUser(user);
+            }
+        } catch (e) {
+            console.error("Error in Fetching User : ", e.code, e.message);
+        }
+    }
 
     useEffect(() => {
         if (isAuthenticated) {
             console.log(user);
-            // getAll();
-
-
-            // console.log(firebase.firebase.firestore());
-            // firebase.initializeApp(firebaseConfig);
-
-            // console.log(firebase);
-
-
-
+            // getUser(user.nickname);
         }
-
-
     }, [isAuthenticated]);
-
-
 
     if (isAuthenticated) {
         return (
-            <div className="px-8 flex flex-col space-y-4">
-                Hello from DashBoard
+            <>
+                <Header></Header>
 
-                <p>user is ? </p>
-                <button onClick={() => { getAll(); }}>GET DATA</button>
-                <LogoutButton></LogoutButton>
-
-                <Profile></Profile>
-            </div>
-        )
+                <div className="flex flex-col items-center justify-center self-center my-12">
+                    <ProfileImage user={user.nickname}></ProfileImage>
+                    <LinkInput></LinkInput>
+                </div>
+            </>
+        );
     }
 
     if (isLoading) {
-
-
-        return (
-            <div>Loading.........</div>
-        )
+        return <div>Loading.........</div>;
     }
-}
+};
 
-export default DashBoard
+export default DashBoard;
