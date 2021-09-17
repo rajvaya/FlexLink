@@ -6,6 +6,9 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import './index.css'
 
 
+
+ 
+console.log(import.meta.env);
 ReactDOM.render(
   <Auth0Provider
     domain={import.meta.env.VITE_DOMAIN}
