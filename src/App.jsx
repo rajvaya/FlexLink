@@ -7,10 +7,20 @@ import {
   Redirect,
 } from "react-router-dom"
 import HomePage from './pages/HomePage'
-import React from 'react'
+import React, { useEffect } from 'react'
 import DashBoard from './pages/DashBoard'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function App() {
+
+
+  // const { getAccessTokenSilently } = useAuth0()
+
+  // useEffect(() => {
+  //   getAccessTokenSilently();
+  //  }, []);
+
+
   return (
     <Router>
       <Switch>

@@ -11,6 +11,8 @@ ReactDOM.render(
     domain={import.meta.env.VITE_DOMAIN}
     clientId={import.meta.env.VITE_CLIENTID}
     redirectUri={window.location.origin}
+    useRefreshTokens={true}
+    cacheLocation="localstorage"
   >
     <App />
   </Auth0Provider>,
