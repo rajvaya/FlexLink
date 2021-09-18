@@ -12,6 +12,7 @@ const LinksPage = ({ match }) => {
 
 
     const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(null);
 
     const history = useHistory();
     async function checkUser(user) {
@@ -21,6 +22,9 @@ const LinksPage = ({ match }) => {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 console.log("Document data:", docSnap.data());
+
+                setData(docSnap.data());
+
                 setIsLoading(false);
                 // console.log(docSnap.data().links);
             } else {
@@ -38,7 +42,7 @@ const LinksPage = ({ match }) => {
 
         checkUser(match.params.id)
 
-    });
+    }, []);
 
     if (isLoading) {
 
@@ -54,13 +58,34 @@ const LinksPage = ({ match }) => {
 
 
         return (<div className="flex flex-col items-center justify-center self-center my-12">
-            <ProfileImage user={match.params.id}></ProfileImage>
 
-            <div className="w-2/3 max-w-2xl space-y-4 flex flex-col">
 
-                <ClickableLinks />
-                <ClickableLinks />
-                <ClickableLinks />
+
+            {
+
+                data.links.length > 0 ?
+                    <ProfileImage user={match.params.id}></ProfileImage> : null
+
+            }
+
+            <div className="w-5/6 max-w-2xl space-y-4 flex flex-col mt-4" >
+
+                {
+
+                    data.links.length > 0 ? (
+                        data.links.map((item) => {
+                            return <ClickableLinks link={item.link} title={item.title} />
+                        })
+                    ) : <div className="w-full flex flex-col items-center">
+
+                        <img src="https://static.thenounproject.com/png/2157490-200.png" alt="" />
+
+                        <p className="text-xl mt-4">NO Links added By {match.params.id}</p>
+
+
+                    </div>
+
+                }
 
 
             </div>

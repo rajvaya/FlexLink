@@ -5,10 +5,10 @@ const LogoutButton = () => {
     const { logout } = useAuth0();
 
     return (
-        <button onClick={() => logout({ returnTo: window.location.origin })} className="py-4 px-20 border-2 rounded-md border-gray-500 text-blue-800 text-lg w-max">
+        <button onClick={() => logout({ returnTo: window.location.origin })} className="py-2 font-semibold  px-10 border-2 rounded-md border-gray-500 text-blue-800 text-lg">
             Log Out
         </button>
-        
+
     );
 };
 
