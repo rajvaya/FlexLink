@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import firebase from "../firebase";
 import {
 
@@ -8,10 +7,14 @@ import {
     getFirestore,
     collection,
 } from "firebase/firestore/lite";
+import React, { useState, useEffect } from 'react'
 
-const LinkInput = ({ links, user, setLinks }) => {
-    const [title, setTitle] = useState("");
-    const [link, setLink] = useState("");
+const EditableLink = ({ propTitle, propLink, links, user, setLinks, index }) => {
+
+
+    const [title, setTitle] = useState(propTitle);
+    const [link, setLink] = useState(propLink);
+    const [isEditing, setIsEditing] = useState(false);
 
     const titleHandler = (e) => {
         e.preventDefault();
@@ -27,14 +30,12 @@ const LinkInput = ({ links, user, setLinks }) => {
     };
 
 
-    useEffect(() => {
-        updateLinks();
-    },[links]);
 
-     function addLink() {
-        setLinks((currLinks) => [...currLinks, { "title": title, "link": link }]);
-        console.log(links);
-    }
+    // useEffect(() => {
+
+    //     if (isEditing)
+
+    // }, [links]);
 
 
     async function updateLinks() {
@@ -44,11 +45,27 @@ const LinkInput = ({ links, user, setLinks }) => {
             await updateDoc(doc(getFirestore(), "users", user), {
                 links: links
             }).then((e) => {
-                console.log("new link added", e);
+                console.log("Links Updated", e);
             });
         } catch (error) {
-            console.log("error in Link Creation : ", error);
+            console.log("error in Link Updation : ", error);
         }
+
+
+        setIsEditing(!isEditing);
+
+    }
+
+
+
+
+    function updateHandler() {
+
+        links.splice(index, 1, { "title": title, "link": link });
+        setLinks(links);
+        updateLinks();
+
+
     }
 
 
@@ -64,6 +81,7 @@ const LinkInput = ({ links, user, setLinks }) => {
                 placeholder="Enter Your Title"
                 onChange={titleHandler}
                 className="p-2 w-full border-2 rounded-full border-blue-800"
+                disabled={!isEditing}
             />
             <input
                 type="text"
@@ -71,16 +89,17 @@ const LinkInput = ({ links, user, setLinks }) => {
                 onChange={linkHandler}
                 placeholder="Enter Your url "
                 className="p-2 w-full border-2 rounded-full border-blue-800"
+                disabled={!isEditing}
             />
-            <button className="border-2 p-4 rounded-md border-indigo-800" onClick={addLink}>
-                Add Link
+            <button className="border-2 p-4 rounded-md border-indigo-800" onClick={() => {
+
+                isEditing ? updateHandler() : setIsEditing(!isEditing);
+
+            }}>
+                {isEditing ? "Update" : "Edit"}
             </button>
         </div>
-    );
+    )
 }
 
-export default LinkInput;
-
-
-
-
+export default EditableLink

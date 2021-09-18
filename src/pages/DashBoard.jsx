@@ -1,26 +1,21 @@
-import React, { useEffect } from "react";
-import LogoutButton from "../components/logoutButton";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import Profile from "../components/profile";
 import firebase from "../firebase";
 import {
-    collection,
-    getDocs,
     getDoc,
     setDoc,
-    query,
     doc,
     getFirestore,
 } from "firebase/firestore/lite";
 import Header from "../components/header";
 import ProfileImage from "../components/ProfileImage";
 import LinkInput from "../components/LinkInput";
+import EditableLink from "../components/EditableLink";
 
 const DashBoard = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
+    const [links, setLinks] = useState([]);
 
-    console.log(firebase);
-    console.log();
 
     async function createUser(username) {
         try {
@@ -43,6 +38,9 @@ const DashBoard = () => {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 console.log("Document data:", docSnap.data());
+                // console.log(docSnap.data().links);
+                setLinks(docSnap.data().links);
+
             } else {
                 createUser(user);
             }
@@ -54,7 +52,7 @@ const DashBoard = () => {
     useEffect(() => {
         if (isAuthenticated) {
             console.log(user);
-            // getUser(user.nickname);
+            getUser(user.nickname);
         }
     }, [isAuthenticated]);
 
@@ -65,7 +63,16 @@ const DashBoard = () => {
 
                 <div className="flex flex-col items-center justify-center self-center my-12">
                     <ProfileImage user={user.nickname}></ProfileImage>
-                    <LinkInput></LinkInput>
+
+                    {
+                        links.map((link, index) => {
+
+                          
+                            return <EditableLink key={index} index={ index} propTitle={link.title} propLink={link.link} links={links} user={user.nickname} setLinks={setLinks}/>
+                        })
+
+                    }
+                    <LinkInput links={links} user={user.nickname} setLinks={setLinks}></LinkInput>
                 </div>
             </>
         );
