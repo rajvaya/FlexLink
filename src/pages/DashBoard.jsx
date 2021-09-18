@@ -78,9 +78,6 @@ const DashBoard = () => {
 
                 <div className="flex flex-col items-center justify-center self-center my-12">
                     <ProfileImage user={user.nickname}></ProfileImage>
-
-
-
                     <button
                         onClick={copyLink}
                         className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700">

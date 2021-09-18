@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage'
 import React, { useEffect } from 'react'
 import DashBoard from './pages/DashBoard'
 import LinksPage from './pages/LinksPage'
+import PageNotFound from './pages/PageNotFound'
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
           <DashBoard />
         </Route>
         <Route path="/u/:id" exact component={LinksPage} />
-        <Redirect path="*" to="/" />
+        <Route path="*" exact component={PageNotFound} />
       </Switch>
 
     </Router>

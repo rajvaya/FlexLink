@@ -24,7 +24,7 @@ const Hero = () => {
 
                     <div onClick={() => {
 
-                        loginWithRedirect({ screen_hint: "signup" });
+                        loginWithRedirect({ screen_hint: "signup", redirectUri: window.location.origin + "/dashboard" });
 
 
                     }} className="min-w-full px-8  border-2 rounded-lg border-indigo-700 py-3 text-center text-white bg-indigo-700 hover:bg-white hover:text-indigo-700 font-bold text-2xl animate-pulse">
