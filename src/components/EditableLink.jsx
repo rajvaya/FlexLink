@@ -1,5 +1,6 @@
 import { doc, updateDoc, getFirestore } from "firebase/firestore/lite";
 import React, { useState } from "react";
+import firebase from "../firebase"
 
 const EditableLink = ({
   propTitle,

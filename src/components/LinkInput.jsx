@@ -1,9 +1,11 @@
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import {
     doc,
     updateDoc,
     getFirestore,
 } from "firebase/firestore/lite";
+import firebase from "../firebase"
+
 
 const LinkInput = ({ links, user, setLinks }) => {
     const [title, setTitle] = useState("");

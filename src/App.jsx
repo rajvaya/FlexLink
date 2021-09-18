@@ -9,17 +9,10 @@ import {
 import HomePage from './pages/HomePage'
 import React, { useEffect } from 'react'
 import DashBoard from './pages/DashBoard'
-import { useAuth0 } from '@auth0/auth0-react'
+import LinksPage from './pages/LinksPage'
+
 
 function App() {
-
-
-  // const { getAccessTokenSilently } = useAuth0()
-
-  // useEffect(() => {
-  //   getAccessTokenSilently();
-  //  }, []);
-
 
   return (
 
@@ -31,6 +24,7 @@ function App() {
         <Route exact path="/dashboard">
           <DashBoard />
         </Route>
+        <Route path="/u/:id" exact component={LinksPage} />
         <Redirect path="*" to="/" />
       </Switch>
 
