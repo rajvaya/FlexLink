@@ -11,6 +11,7 @@ import React, { useEffect } from 'react'
 import DashBoard from './pages/DashBoard'
 import LinksPage from './pages/LinksPage'
 import PageNotFound from './pages/PageNotFound'
+import Footer from './components/footer'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/u/:id" exact component={LinksPage} />
         <Route path="*" exact component={PageNotFound} />
       </Switch>
+      <Footer />
 
     </Router>
   )

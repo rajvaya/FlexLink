@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore/lite";
 import ProfileImage from '../components/ProfileImage';
 import ClickableLinks from '../components/ClickableLinks';
+import loader from "../assets/loader.svg"
 
 const LinksPage = ({ match }) => {
 
@@ -47,9 +48,9 @@ const LinksPage = ({ match }) => {
     if (isLoading) {
 
         return (
-            <div className="w-screen min-h-screen flex flex-col items-center justify-center">
+            <div className="w-screen min-h-screen h- flex flex-col items-center justify-center">
 
-                <img src="https://www.svgrepo.com/show/199948/loading-loader.svg" alt="Loader" className="h-1/4 w-1/4 animate-spin self-center" />
+                <img src={loader} alt="Loader" className="h-1/6 w-1/6 animate-spin self-center" />
 
             </div>
         )
@@ -57,7 +58,7 @@ const LinksPage = ({ match }) => {
     else {
 
 
-        return (<div className="flex flex-col items-center justify-center self-center my-12">
+        return (<div className="flex flex-col min-h-screen items-center  self-center my-12 overflow-x-hidden overflow-hidden">
 
 
 

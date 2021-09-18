@@ -11,7 +11,7 @@ import Header from "../components/header";
 import ProfileImage from "../components/ProfileImage";
 import LinkInput from "../components/LinkInput";
 import EditableLink from "../components/EditableLink";
-import copyicon from "../assets/copy.svg"
+import loader from "../assets/loader.svg"
 
 const DashBoard = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
@@ -95,12 +95,18 @@ const DashBoard = () => {
                     }
                     <LinkInput links={links} user={user.nickname} setLinks={setLinks}></LinkInput>
                 </div>
+
             </>
         );
     }
 
     if (isLoading) {
-        return <div>Loading.........</div>;
+        return (
+            <div className="w-screen min-h-screen h- flex flex-col items-center justify-center">
+                <img src={loader} alt="Loader" className="h-1/6 w-1/6 animate-spin self-center" />
+
+            </div>
+        )
     }
 };
 

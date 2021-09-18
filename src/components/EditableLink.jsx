@@ -70,7 +70,7 @@ const EditableLink = ({
         value={title}
         placeholder="Enter Your Title"
         onChange={titleHandler}
-        className="p-2 w-full border-2 rounded-full border-blue-800"
+        className="p-2 w-full border-2 rounded-full border-blue-800  focus:outline-none"
         disabled={!isEditing}
       />
       <input
@@ -82,7 +82,7 @@ const EditableLink = ({
         disabled={!isEditing}
       />
       <button
-        className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700"
+        className="focus:outline-none mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700"
         onClick={() => {
           isEditing ? updateHandler() : setIsEditing(!isEditing);
         }}
