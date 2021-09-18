@@ -34,8 +34,8 @@ const Hero = () => {
 
                 </div>
             </div>
-            <div className="col-span-4 lg:col-span-6 my-4 sm:mt-16 md:m-8 h-full">
-                <img src={heroImage} alt="hero" className="m-0" />
+            <div className="col-span-4 lg:col-span-6 my-4 sm:mt-16 md:m-8 h-full self-center">
+                <img src={heroImage} alt="hero" className="self-center w-full" />
             </div>
         </div>
     )
