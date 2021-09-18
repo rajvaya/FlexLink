@@ -64,7 +64,7 @@ const EditableLink = ({
   }
 
   return (
-    <div className="max-w-2xl w-full rounded-md self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto items-center">
+    <div className="max-w-2xl w-full rounded-md self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto  items-center">
       <input
         type="text"
         value={title}
@@ -81,6 +81,11 @@ const EditableLink = ({
         className="p-2 w-full border-2 rounded-full border-blue-800"
         disabled={!isEditing}
       />
+      
+
+      <div className="flex flex-row justify-between w-full">
+
+
       <button
         className="focus:outline-none mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700"
         onClick={() => {
@@ -93,6 +98,7 @@ const EditableLink = ({
         className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-red-700 hover:bg-white text-white hover:text-red-700  text-lg bg-red-700"
 
         onClick={deleteLink}>Delete</button>
+      </div>
     </div>
   );
 };

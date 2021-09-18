@@ -80,19 +80,22 @@ const DashBoard = () => {
                     <ProfileImage user={user.nickname}></ProfileImage>
                     <button
                         onClick={copyLink}
-                        className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700">
+                        className="my-6 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700">
                         Copy Your Link
                     </button>
 
+                    <div className="space-y-4 w-full px-6">
+                        <p className="font-bold text-black text-2xl text-center" >Your Links</p>
 
                     {
                         links.map((link, index) => {
-
-
+                            
+                            
                             return <EditableLink key={index} index={index} propTitle={link.title} propLink={link.link} links={links} user={user.nickname} setLinks={setLinks} />
                         })
-
+                        
                     }
+                    </div>
                     <LinkInput links={links} user={user.nickname} setLinks={setLinks}></LinkInput>
                 </div>
 
