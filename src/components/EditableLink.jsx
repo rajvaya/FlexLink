@@ -64,7 +64,7 @@ const EditableLink = ({
   }
 
   return (
-    <div className="max-w-2xl w-full self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto items-center">
+    <div className="max-w-2xl w-full rounded-md self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto items-center">
       <input
         type="text"
         value={title}
@@ -82,14 +82,17 @@ const EditableLink = ({
         disabled={!isEditing}
       />
       <button
-        className="border-2 p-4 rounded-md border-indigo-800"
+        className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700"
         onClick={() => {
           isEditing ? updateHandler() : setIsEditing(!isEditing);
         }}
       >
         {isEditing ? "Update" : "Edit"}
       </button>
-      <button onClick={deleteLink}>Delete</button>
+      <button
+        className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-red-700 hover:bg-white text-white hover:text-red-700  text-lg bg-red-700"
+
+        onClick={deleteLink}>Delete</button>
     </div>
   );
 };

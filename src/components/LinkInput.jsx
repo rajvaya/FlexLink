@@ -70,7 +70,7 @@ const LinkInput = ({ links, user, setLinks }) => {
                 placeholder="Enter Your url "
                 className="p-2 w-full border-2 rounded-full border-blue-800"
             />
-            <button className="border-2 p-4 rounded-md border-indigo-800" onClick={addLink}>
+            <button className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700" onClick={addLink}>
                 Add Link
             </button>
         </div>

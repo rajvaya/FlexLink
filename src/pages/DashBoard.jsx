@@ -11,6 +11,7 @@ import Header from "../components/header";
 import ProfileImage from "../components/ProfileImage";
 import LinkInput from "../components/LinkInput";
 import EditableLink from "../components/EditableLink";
+import copyicon from "../assets/copy.svg"
 
 const DashBoard = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
@@ -56,6 +57,20 @@ const DashBoard = () => {
         }
     }, [isAuthenticated]);
 
+
+    function copyLink() {
+
+        let baseURL = "https://flexlink.pages.dev/u/" + user.nickname;
+        var dummy = document.createElement("input")
+        document.body.appendChild(dummy);
+        dummy.value = baseURL;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        alert("Your Page Link Copied to ClipBoard")
+    }
+
+
     if (isAuthenticated) {
         return (
             <>
@@ -64,11 +79,20 @@ const DashBoard = () => {
                 <div className="flex flex-col items-center justify-center self-center my-12">
                     <ProfileImage user={user.nickname}></ProfileImage>
 
+
+
+                    <button
+                        onClick={copyLink}
+                        className="mb-4 py-2 font-semibold  px-10 border-2 rounded-md border-indigo-700 hover:bg-white text-white hover:text-indigo-700  text-lg bg-indigo-700">
+                        Copy Your Link
+                    </button>
+
+
                     {
                         links.map((link, index) => {
 
-                          
-                            return <EditableLink key={index} index={ index} propTitle={link.title} propLink={link.link} links={links} user={user.nickname} setLinks={setLinks}/>
+
+                            return <EditableLink key={index} index={index} propTitle={link.title} propLink={link.link} links={links} user={user.nickname} setLinks={setLinks} />
                         })
 
                     }
