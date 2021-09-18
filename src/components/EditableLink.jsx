@@ -1,131 +1,96 @@
-import firebase from "../firebase";
-import {
+import { doc, updateDoc, getFirestore } from "firebase/firestore/lite";
+import React, { useState } from "react";
 
-    setDoc,
-    doc,
-    updateDoc,
-    getFirestore,
-    collection,
-} from "firebase/firestore/lite";
-import React, { useState, useEffect } from 'react'
+const EditableLink = ({
+  propTitle,
+  propLink,
+  links,
+  user,
+  setLinks,
+  index,
+}) => {
+  const [title, setTitle] = useState(propTitle);
+  const [link, setLink] = useState(propLink);
+  const [isEditing, setIsEditing] = useState(false);
 
-const EditableLink = ({ propTitle, propLink, links, user, setLinks, index }) => {
+  const titleHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setTitle(e.target.value);
+  };
 
+  const linkHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setLink(e.target.value);
+  };
 
-    const [title, setTitle] = useState(propTitle);
-    const [link, setLink] = useState(propLink);
-    const [isEditing, setIsEditing] = useState(false);
-
-    const titleHandler = (e) => {
-        e.preventDefault();
-        console.log(e.target.value);
-        setTitle(e.target.value);
-    };
-
-
-    const linkHandler = (e) => {
-        e.preventDefault();
-        console.log(e.target.value);
-        setLink(e.target.value);
-    };
-
-
-
-
-
-    async function updateLinks(updatedLinks) {
-
-
-        try {
-            await updateDoc(doc(getFirestore(), "users", user), {
-                links: updatedLinks
-            }).then((e) => {
-                console.log("Links Updated", e);
-                setLinks(updatedLinks);
-            });
-        } catch (error) {
-            console.log("error in Link Updation : ", error);
-        }
-
-        if (isEditing)
-            setIsEditing(!isEditing);
-
+  async function updateLinks(updatedLinks) {
+    try {
+      await updateDoc(doc(getFirestore(), "users", user), {
+        links: updatedLinks,
+      }).then((e) => {
+        console.log("Links Updated", e);
+        setLinks(updatedLinks);
+      });
+    } catch (error) {
+      console.log("error in Link Updation : ", error);
     }
 
+    if (isEditing) setIsEditing(!isEditing);
+  }
 
+  function updateHandler() {
+    let updatedLinks = links.map((item, i) => {
+      if (i === index) {
+        return { title: title, link: link };
+      }
 
+      return item;
+    });
 
-    function updateHandler() {
+    updateLinks(updatedLinks);
+  }
 
+  function deleteLink() {
+    let updatedLinks = links.filter(function (item, i) {
+      return i !== index;
+    });
 
+    console.log(updatedLinks, "after Delete");
 
-        let updatedLinks = links.map((item, i) => {
+    updateLinks(updatedLinks);
+  }
 
-            if (i === index) {
+  return (
+    <div className="max-w-2xl w-full self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto items-center">
+      <input
+        type="text"
+        value={title}
+        placeholder="Enter Your Title"
+        onChange={titleHandler}
+        className="p-2 w-full border-2 rounded-full border-blue-800"
+        disabled={!isEditing}
+      />
+      <input
+        type="text"
+        value={link}
+        onChange={linkHandler}
+        placeholder="Enter Your url "
+        className="p-2 w-full border-2 rounded-full border-blue-800"
+        disabled={!isEditing}
+      />
+      <button
+        className="border-2 p-4 rounded-md border-indigo-800"
+        onClick={() => {
+          isEditing ? updateHandler() : setIsEditing(!isEditing);
+        }}
+      >
+        {isEditing ? "Update" : "Edit"}
+      </button>
+      <button onClick={deleteLink}>Delete</button>
+    </div>
+  );
+};
 
-                return { "title": title, "link": link };
-
-            }
-
-            return item
-
-
-        });
-
-
-        updateLinks(updatedLinks);
-
-    }
-
-    function deleteLink() {
-
-      
-
-        let updatedLinks = links.filter(function(item,i)
-        {
-            return i!==index;
-        });
-
-        console.log(updatedLinks, "after Delete");
-
-        updateLinks(updatedLinks);
-
-    }
-
-
-
-
-
-
-
-    return (
-        <div className="max-w-2xl w-full self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto items-center">
-            <input
-                type="text"
-                value={title}
-                placeholder="Enter Your Title"
-                onChange={titleHandler}
-                className="p-2 w-full border-2 rounded-full border-blue-800"
-                disabled={!isEditing}
-            />
-            <input
-                type="text"
-                value={link}
-                onChange={linkHandler}
-                placeholder="Enter Your url "
-                className="p-2 w-full border-2 rounded-full border-blue-800"
-                disabled={!isEditing}
-            />
-            <button className="border-2 p-4 rounded-md border-indigo-800" onClick={() => {
-
-                isEditing ? updateHandler() : setIsEditing(!isEditing);
-
-            }}>
-                {isEditing ? "Update" : "Edit"}
-            </button>
-            <button onClick={deleteLink}>Delete</button>
-        </div>
-    )
-}
-
-export default EditableLink
+export default EditableLink;

@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import firebase from "../firebase";
+import React, {useState } from 'react'
 import {
-
-    setDoc,
     doc,
     updateDoc,
     getFirestore,
-    collection,
 } from "firebase/firestore/lite";
 
 const LinkInput = ({ links, user, setLinks }) => {
@@ -42,6 +38,8 @@ const LinkInput = ({ links, user, setLinks }) => {
             await updateDoc(doc(getFirestore(), "users", user), {
                 links: newLinks
             }).then((e) => {
+                setTitle("");
+                setLink("");
                 setLinks(newLinks);
             });
         } catch (error) {
@@ -55,7 +53,7 @@ const LinkInput = ({ links, user, setLinks }) => {
 
 
     return (
-        <div className="max-w-2xl w-full self-center px-8 py-4 flex flex-col space-y-4 border-blue-800 border-2 m-auto items-center">
+        <div className="w-2/3 max-w-2xl mt-8 self-center px-6 py-4 mx-2 flex flex-col space-y-4 border-gray-800 border-2 m-auto items-center rounded-lg drop-shadow-2xl">
             <input
                 type="text"
                 value={title}
