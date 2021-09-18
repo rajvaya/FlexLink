@@ -27,24 +27,22 @@ const LinkInput = ({ links, user, setLinks }) => {
     };
 
 
-    useEffect(() => {
-        updateLinks();
-    },[links]);
+    // useEffect(() => {
+    //     updateLinks();
+    // }, []);
 
-     function addLink() {
-        setLinks((currLinks) => [...currLinks, { "title": title, "link": link }]);
-        console.log(links);
+    function addLink() {
+        let newLinks = [...links, { "title": title, "link": link }];
+        updateLinks(newLinks);
     }
 
 
-    async function updateLinks() {
-
-
+    async function updateLinks(newLinks) {
         try {
             await updateDoc(doc(getFirestore(), "users", user), {
-                links: links
+                links: newLinks
             }).then((e) => {
-                console.log("new link added", e);
+                setLinks(newLinks);
             });
         } catch (error) {
             console.log("error in Link Creation : ", error);

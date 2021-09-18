@@ -31,28 +31,24 @@ const EditableLink = ({ propTitle, propLink, links, user, setLinks, index }) => 
 
 
 
-    // useEffect(() => {
-
-    //     if (isEditing)
-
-    // }, [links]);
 
 
-    async function updateLinks() {
+    async function updateLinks(updatedLinks) {
 
 
         try {
             await updateDoc(doc(getFirestore(), "users", user), {
-                links: links
+                links: updatedLinks
             }).then((e) => {
                 console.log("Links Updated", e);
+                setLinks(updatedLinks);
             });
         } catch (error) {
             console.log("error in Link Updation : ", error);
         }
 
-
-        setIsEditing(!isEditing);
+        if (isEditing)
+            setIsEditing(!isEditing);
 
     }
 
@@ -61,12 +57,41 @@ const EditableLink = ({ propTitle, propLink, links, user, setLinks, index }) => 
 
     function updateHandler() {
 
-        links.splice(index, 1, { "title": title, "link": link });
-        setLinks(links);
-        updateLinks();
 
+
+        let updatedLinks = links.map((item, i) => {
+
+            if (i === index) {
+
+                return { "title": title, "link": link };
+
+            }
+
+            return item
+
+
+        });
+
+
+        updateLinks(updatedLinks);
 
     }
+
+    function deleteLink() {
+
+      
+
+        let updatedLinks = links.filter(function(item,i)
+        {
+            return i!==index;
+        });
+
+        console.log(updatedLinks, "after Delete");
+
+        updateLinks(updatedLinks);
+
+    }
+
 
 
 
@@ -98,6 +123,7 @@ const EditableLink = ({ propTitle, propLink, links, user, setLinks, index }) => 
             }}>
                 {isEditing ? "Update" : "Edit"}
             </button>
+            <button onClick={deleteLink}>Delete</button>
         </div>
     )
 }
